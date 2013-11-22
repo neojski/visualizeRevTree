@@ -1,29 +1,5 @@
 "use strict";
 var visualizeRevTree = function(db, docId, callback) {
-  var head = document.getElementsByTagName("head")[0];
-  if (head) {
-    var style = [
-      ".visualizeRevTree{position: relative}",
-      ".visualizeRevTree * {margin: 0; padding: 0; font-size: 10px}",
-      ".visualizeRevTree line{stroke: #000; stroke-width: .10}",
-      ".visualizeRevTree div{position: relative; }",
-      ".visualizeRevTree circle{stroke: #000; stroke-width: .10}",
-      ".visualizeRevTree circle.leaf{fill: green}",
-      ".visualizeRevTree circle.winner{fill: red}",
-      ".visualizeRevTree circle.deleted{fill: grey}",
-      ".visualizeRevTree circle{transition: .3s}",
-      ".visualizeRevTree circle.selected{stroke-width: .3}",
-      ".visualizeRevTree div.box{background: #ddd; border: 1px solid #bbb; border-radius: 7px; padding: 7px; position: absolute;}",
-      ".visualizeRevTree .editor {width: 220px}",
-      ".visualizeRevTree .editor dt{width: 100px; height: 15px; float: left;}",
-      ".visualizeRevTree .editor dd{width: 100px; height: 15px; float: left;}",
-      ".visualizeRevTree .editor input{width: 100%; height: 100%}"
-    ];
-    var styleNode = document.createElement("style");
-    styleNode.appendChild(document.createTextNode(style.join("\n")));
-    head.appendChild(styleNode);
-  }
-
   var grid = 10;
   var scale = 7;
   var r = 1;
@@ -281,7 +257,9 @@ var visualizeRevTree = function(db, docId, callback) {
 
 
     function draw(paths){
-      var minUniq = minUniqueLength(allRevs);
+      var minUniq = minUniqueLength(allRevs.map(function(rev) {
+        return rev.split('-')[1];
+      }));
       var maxX = grid;
       var maxY = grid;
       var levelCount = []; // numer of nodes on some level (pos)
