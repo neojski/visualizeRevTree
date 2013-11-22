@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <style type="text/css">
+      body{background: #F2F2F2; color: #333; font-family: "Helvetica", Arial,sans-serif;}
+      label, input {font-size: 1.5em;}
+    </style>
+    <script src="pouchdb-nightly.js"></script>
+    <script src="visualizeRevTree.js"></script>
+    <link href="https://raw.github.com/daleharvey/trakkr/gh-pages/style/trakkr.css" rel="stylesheet" type="text/css" />
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <section>
+    <h1>Revision tree visualizer</h1>
+    <p>You can you this small tool to create any tree you want and then export it to JSON. With that you can easily create Pouchdb tests as the returned format is compatible with couchdb (pouchdb) bulkDocs. Don't forget new_edits=false!</p>
+    <p><form id="form">
+      <ul>
+        <li><label for="url">Database URL:</label><input type="text" id="url" name="url" placeholder="http://me.iriscouch/db/foo" /></li>
+        <li><label for="docId">Document id:</label><input type="text" id="docId" name="docId" placeholder="foo"/></li>
+        <li><label for="cors">Use CORS proxy:</label><input type="checkbox" id="cors" name="cors" /></li>
+        <li><input type="submit" id="submit" value="visualize" /></li>
+        <li><input type="button" id="export" value="export" /> (see console for output!)</li>
+        <li><p id="status">status</p></li>
+      </ul>
+    </form></p>
+    </section>
+  </body>
+</html>
