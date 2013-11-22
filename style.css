@@ -1,0 +1,128 @@
+/* https://raw.github.com/daleharvey/trakkr/gh-pages/style/trakkr.css */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "Helvetica", Arial,sans-serif;
+  background: none repeat scroll 0 0 #F2F2F2;
+}
+
+a {
+ cursor: pointer;
+}
+
+.page {
+  display: none;
+}
+
+button {
+  -moz-box-sizing: border-box;
+  background: repeat-x scroll left bottom #FAFAFA;
+  border: 0.1rem solid #9F9F9F;
+  border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
+  color: #333333;
+  display: inline-block;
+  font: 400 1.6rem/3.8rem Sans-serif;
+  height: 3.8rem;
+  margin: 0 0 1rem;
+  outline: medium none;
+  overflow: hidden;
+  padding: 0 1.5rem;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  text-shadow: 0.1rem 0.1rem 0 rgba(255, 255, 255, 0.3);
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 100%;
+}
+
+button[disabled] {
+  opacity: 0.5;
+}
+
+#timer {
+  text-align: center;
+}
+
+header {
+  overflow: auto;
+}
+
+#map { height: 180px; width: 100%; }
+
+.grp { width: 33%; text-align: center; border-right: 1px solid #999; float: left; } 
+.grp:last-child { border-right: 0px; }
+#stats { border-bottom: 1px solid #999; overflow: auto; margin-bottom: 20px; }
+.grp h3 { margin: 5px; font-size: 14px; text-transform: uppercase; color: #666}
+
+header h1 {
+  float:left;
+  margin: 0;
+  line-height: 50px;
+  height: 50px;
+  text-indent: 10px;
+}
+
+header h1 a:hover {
+  text-decoration: underline;
+}
+
+header navigation {
+  float: right;
+  height: 50px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+navigation li {
+ padding: 10px;
+}
+
+navigation li a {
+ height: 10px;
+ padding-top: 20px;
+ font-size: 10px;
+ display: block;
+ background-size: 20px 20px;
+ background-repeat: no-repeat;
+ background-position: top center;
+}
+
+#activities {
+  background-image: url(img/list.svg);
+}
+
+#page-home { padding: 10px; }
+#page-home h1 { margin-bottom: 20px; margin-top: 10px; }
+
+header {
+  background: #FFF;
+  border-bottom: 1px solid #ACACAC;
+}
+
+#runs li a {
+ display: block;
+ padding: 10px 10px 10px 40px;
+ border-bottom: 1px solid #CACACA;
+}
+
+.run {
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-image: url(img/run.svg);
+}
+
+.empty { text-align: center; margin: 40px; font-size: 40px; }
+
+/* Start Activity Page */
+
+#start { 
+  background: orange;
+}
+
+#start.active { 
+  background: green;
+}
