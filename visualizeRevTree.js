@@ -1,4 +1,5 @@
 "use strict";
+
 var visualizeRevTree = function(db, docId, callback) {
   var grid = 10;
   var scale = 7;

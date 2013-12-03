@@ -1,11 +1,40 @@
-body{
+body {
   background: #F2F2F2;
   color: #333;
   font-family: "Helvetica", Arial,sans-serif;
+  font-size: 1.2em;
 }
-label, input {
-  font-size: 1.5em;
+
+input {
+  font-size: 1em;
+  padding: 5px;
 }
+
+header {
+  width:600px;
+  margin: 0 auto;
+}
+
+h1, form {
+  text-align: center;
+}
+
+#export {
+  display: none;
+}
+
+#results {
+  margin: 20px;
+  overflow: scroll;
+  border: 2px solid black;
+  color: #999;
+  padding: 20px;
+}
+
+#url {
+  width: 70%;
+}
+
 
 .visualizeRevTree {position: relative}
 .visualizeRevTree * {margin: 0; padding: 0; font-size: 10px}
