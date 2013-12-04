@@ -1,24 +1,49 @@
-body{
+body {
   background: #F2F2F2;
   color: #333;
   font-family: "Helvetica", Arial,sans-serif;
+  font-size: 1.2em;
 }
-label, input {
-  font-size: 1.5em;
-  display: inline-block;
+
+input {
+  font-size: 1em;
+  padding: 5px;
 }
-label {
-	width: 250px;
+
+header {
+  width:600px;
+  margin: 0 auto;
 }
+
+h1, form {
+  text-align: center;
+}
+
+#export {
+  display: none;
+}
+
+#results {
+  margin: 20px;
+  overflow: scroll;
+  border: 2px solid black;
+  color: #999;
+  padding: 20px;
+}
+
+#url {
+  width: 70%;
+}
+
 
 .visualizeRevTree {position: relative}
 .visualizeRevTree * {margin: 0; padding: 0; font-size: 10px}
 .visualizeRevTree line{stroke: #000; stroke-width: .10}
 .visualizeRevTree div{position: relative; }
 .visualizeRevTree circle{stroke: #000; stroke-width: .10}
-.visualizeRevTree circle.leaf{fill: #008000}
-.visualizeRevTree circle.winner{fill: #FF0000}
-.visualizeRevTree circle.deleted{fill: #808080}
+.visualizeRevTree circle.leaf{fill: green}
+.visualizeRevTree circle.winner{fill: red}
+.visualizeRevTree circle.deleted{fill: grey}
 .visualizeRevTree circle{transition: .3s}
 .visualizeRevTree circle.selected{stroke-width: .3}
 .visualizeRevTree div.box{background: #ddd; border: 1px solid #bbb; border-radius: 7px; padding: 7px; position: absolute;}

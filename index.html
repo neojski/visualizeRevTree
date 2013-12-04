@@ -1,29 +1,43 @@
 <!doctype html>
 <html>
   <head>
+    <title>Revision Tree Visualizer</title>
     <script src="pouchdb-nightly.js"></script>
     <script src="visualizeRevTree.js"></script>
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="index.js"></script>
   </head>
   <body>
+
     <section>
-    <h1>Revision tree visualizer</h1>
-    <h2>Pro tip</h2>
-    <p>You can you this tool to create any revision tree you want and then export it to JSON. Click on nodes to open edit form. Edit key/value by double-clicking on it. Keep in mind that <code>_rev</code> property does not get changed automatically so you usually want to change <code>3-abcd</code> to something like <code>4-klmn</code>. Open console and type <kbd>exportDoc()</kbd> to export document into <code>bulkDocs</code> friendly result.</p>
-    <p><form id="form">
-      <ul>
-        <li><label for="url">Database URL:</label><input type="text" id="url" name="url" placeholder="http://me.iriscouch/db"/></li>
-        <li><label for="docId">Document id:</label><input type="text" id="docId" name="docId" placeholder="foo"/></li>
-        <li><label for="cors">Use CORS proxy:</label><input type="checkbox" id="cors" name="cors" /></li>
-        <li><input type="submit" id="submit" value="visualize" /></li>
-        <li><p id="status">status</p></li>
-      </ul>
-    </form></p>
-    <a href="https://github.com/neojski/visualizeRevTree"><img style="position: absolute; top: 0;
-      right: 0; border: 0;"
-      src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"
-      alt="Fork me on GitHub"></a>
+
+      <header>
+
+        <h1>Revision tree visualizer</h1>
+
+        <form id="form">
+          <input type="url" id="url" name="url"
+                 placeholder="http://me.iriscouch/dbname/docid" />
+          <input type="submit" id="submit" value="Visualize" />
+        </form>
+
+      </header>
+
+      <div id="results">
+        <h2 id="info">Enter the url to a CouchDB document see a visualisation of its
+          revision tree.</h2>
+        <div id="svgPlaceholder"></div>
+        <div id="export">
+          <a id="exportButton">export (see console for output!)</a>
+          <p>You can you this small tool to create any tree you want and then export
+            it to JSON. With that you can easily create Pouchdb tests as the returned
+            format is compatible with couchdb (pouchdb) bulkDocs.
+            Don't forget new_edits=false!</p>
+        </div>
+      </div>
+
+
     </section>
+
+    <script src="index.js"></script>
   </body>
 </html>
