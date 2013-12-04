@@ -76,15 +76,18 @@ var visualizeRevTree = function(db, docId, callback) {
 
     // first we need to download all data using public API
     var deleted = {};
-    var winner;
+    var winner = null;
     var allRevs = [];
 
     db.get(docId, function(err, doc){ // get winning revision here
       if (err) {
-        callback(err);
-        return;
+        if (err.reason !== "deleted") {
+          callback(err);
+          return;
+        }
+      } else {
+        winner = doc._rev;
       }
-      winner = doc._rev;
       db.get(docId, {revs: true, open_revs: "all"}, function(err, results){
         if(err){
           callback(err);
