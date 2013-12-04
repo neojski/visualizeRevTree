@@ -26,12 +26,12 @@ onload = function(){
     if($('cors').checked){
       name = corsProxy + url.replace(/^https?:\/\//, '');
     }else{
-        name = url;
-      }
-      console.log(name, docId);
-      Pouch(name, function(err, db){
-        callback(err, db, docId);
-      });
+      name = url;
+    }
+    console.log(name, docId);
+    Pouch(name, function(err, db){
+      callback(err, db, docId);
+    });
   };
 
   $('form').onsubmit = function(){
@@ -54,8 +54,7 @@ onload = function(){
     });
     return false;
   };
-
-  $('export').onclick = function(){
+  window.exportDoc = function(){
     initDB(function(err, db, docId){
       db.get(docId, {revs: true, open_revs: "all"}, function(err, results){
         var docs = [];

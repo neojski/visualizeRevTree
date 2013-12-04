@@ -196,13 +196,17 @@ var visualizeRevTree = function(db, docId, callback) {
             }
             div.appendChild(dl);
             var addButton = document.createElement('button');
-            addButton.appendChild(document.createTextNode('add'));
+            addButton.appendChild(document.createTextNode('add field'));
             div.appendChild(addButton);
             addButton.onclick = function(){
               addRow('key', 'value');
             };
+            var cancelButton = document.createElement('button');
+            cancelButton.appendChild(document.createTextNode('cancel'));
+            div.appendChild(cancelButton);
+            cancelButton.onclick = close;
             var okButton = document.createElement('button');
-            okButton.appendChild(document.createTextNode('ok'));
+            okButton.appendChild(document.createTextNode('save'));
             div.appendChild(okButton);
             okButton.onclick = function() {
               var newDoc = {};
@@ -221,10 +225,6 @@ var visualizeRevTree = function(db, docId, callback) {
                 }
               });
             };
-            var cancelButton = document.createElement('button');
-            cancelButton.appendChild(document.createTextNode('cancel'));
-            div.appendChild(cancelButton);
-            cancelButton.onclick = close;
           });
         };
         nodeEl.onclick = click;

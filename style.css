@@ -5,6 +5,10 @@ body{
 }
 label, input {
   font-size: 1.5em;
+  display: inline-block;
+}
+label {
+	width: 250px;
 }
 
 .visualizeRevTree {position: relative}
@@ -12,9 +16,9 @@ label, input {
 .visualizeRevTree line{stroke: #000; stroke-width: .10}
 .visualizeRevTree div{position: relative; }
 .visualizeRevTree circle{stroke: #000; stroke-width: .10}
-.visualizeRevTree circle.leaf{fill: green}
-.visualizeRevTree circle.winner{fill: red}
-.visualizeRevTree circle.deleted{fill: grey}
+.visualizeRevTree circle.leaf{fill: #008000}
+.visualizeRevTree circle.winner{fill: #FF0000}
+.visualizeRevTree circle.deleted{fill: #808080}
 .visualizeRevTree circle{transition: .3s}
 .visualizeRevTree circle.selected{stroke-width: .3}
 .visualizeRevTree div.box{background: #ddd; border: 1px solid #bbb; border-radius: 7px; padding: 7px; position: absolute;}
