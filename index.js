@@ -77,7 +77,7 @@ function doVisualisation(urlStr) {
   });
 }
 
-function exportDocs() {
+function exportDoc() {
 
   var url = parseUrl(document.getElementById('url').value);
 
@@ -111,7 +111,7 @@ function parseArgs() {
   return result;
 }
 
-document.getElementById('exportButton').addEventListener('click', exportDocs);
+document.getElementById('exportButton').addEventListener('click', exportDoc);
 
 var args = parseArgs();
 if (args.url) {

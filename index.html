@@ -27,11 +27,7 @@
           revision tree.</h2>
         <div id="svgPlaceholder"></div>
         <div id="export">
-          <a id="exportButton">export (see console for output!)</a>
-          <p>You can you this small tool to create any tree you want and then export
-            it to JSON. With that you can easily create Pouchdb tests as the returned
-            format is compatible with couchdb (pouchdb) bulkDocs.
-            Don't forget new_edits=false!</p>
+          <p>You can use this tool to create any revision tree you want and then export it to JSON. Click on nodes to open edit form. Edit key/value by double-clicking on it. Keep in mind that <code>_rev</code> property does not get changed automatically so you usually want to change <code>3-abcd</code> to something like <code>4-klmn</code>. Open console and click <button id="exportButton">export</button> to export document into <code>bulkDocs</code> friendly result.</p>
         </div>
       </div>
 
