@@ -13,8 +13,6 @@ onload = function(){
 
   var error = function(err){
     status.innerHTML = "Can't visualize document due to error (error: " + err.error + "; reason: " + err.reason + ")";
-    done();
-    return;
   };
 
   var initDB = function(callback){
