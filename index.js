@@ -24,7 +24,7 @@ function parseUrl(str) {
   url.db = path.shift();
   url.doc = path.join('/');
 
-  url.dbUrl = url.protocol + '//' + url.hostname + ':' + url.port + '/' + url.db;
+  url.dbUrl = url.protocol + '//' + url.host + '/' + url.db;
 
   return url;
 }
