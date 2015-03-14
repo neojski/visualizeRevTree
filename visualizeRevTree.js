@@ -47,11 +47,6 @@ var visualizeRevTree = function(db, docId, callback) {
   var textsBox = document.createElementNS(svgNS, "g");
   svg.appendChild(textsBox);
 
-  // first we need to download all data using public API
-  var deleted = {};
-  var winner = null;
-  var allRevs = [];
-
   var circ = function(x, y, r, isLeaf, isDeleted, isWinner) {
     var el = document.createElementNS(svgNS, "circle");
     el.setAttributeNS(null, "cx", x);
@@ -120,7 +115,7 @@ var visualizeRevTree = function(db, docId, callback) {
   }
 
   function node(x, y, rev, isLeaf, isDeleted, isWinner, shortDescLen){
-    var nodeEl = circ(x, y, r, isLeaf, rev in deleted, rev === winner);
+    var nodeEl = circ(x, y, r, isLeaf, isDeleted, isWinner);
     var pos = rev.split('-')[0];
     var id = rev.split('-')[1];
     var opened = false;
@@ -274,9 +269,11 @@ var visualizeRevTree = function(db, docId, callback) {
       throw err;
     }
   }).then(function(doc){ // get winning revision here
-    winner = doc._rev;
+    var winner = doc._rev;
     return db.get(docId, {revs: true, open_revs: "all"}).then(function(results){
       var paths = [];
+      var allRevs = [];
+      var deleted = {};
       results.forEach(function(res) {
         res = res.ok; // TODO: what about missing
         if (res._deleted) {
