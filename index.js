@@ -81,9 +81,8 @@ function exportDoc() {
 
   initDB(url.dbUrl).then(function (db) {
     db.get(url.doc, {revs: true, open_revs: "all"}, function(err, results) {
-      var docs = [];
-      results.forEach(function(row){
-        docs.push(row.ok);
+      var docs = results.forEach(function(row){
+        return row.ok;
       });
       console.log("Exported docs: ", JSON.stringify(docs));
       console.log("Pouchdb format: ", "db.bulkDocs({docs:" +

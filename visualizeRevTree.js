@@ -4,6 +4,11 @@ var visualizeRevTree = function(db, docId, callback) {
   var scale = 7;
   var r = 1;
 
+  function error(err) {
+    console.error(err);
+    alert("error occured, see console");
+  }
+
   // returns minimal number i such that prefixes of lenght i are unique
   // ex: ["xyaaa", "xybbb", "xybccc"] -> 4
   var minUniqueLength = function(arr){
@@ -137,7 +142,7 @@ var visualizeRevTree = function(db, docId, callback) {
         opened = false;
       };
 
-      db.get(docId, {rev: rev}, function(err, doc){
+      db.get(docId, {rev: rev}).then(function(doc){
         var dl = document.createElement('dl');
         var keys = [];
         var addRow = function(key, value){
@@ -179,12 +184,9 @@ var visualizeRevTree = function(db, docId, callback) {
               newDoc[key.getValue()] = JSON.parse(key.valueInput.getValue());
             }
           });
-          putAfter(newDoc, doc._rev).then(close, function (err) {
-            console.error(err);
-            alert("error occured, see console");
-          });
+          putAfter(newDoc, doc._rev).then(close, error);
         };
-      });
+      }, error);
     };
     nodeEl.onclick = click;
     nodeEl.onmouseover = function() {
@@ -271,10 +273,9 @@ var visualizeRevTree = function(db, docId, callback) {
   }).then(function(doc){ // get winning revision here
     var winner = doc._rev;
     return db.get(docId, {revs: true, open_revs: "all"}).then(function(results){
-      var paths = [];
       var allRevs = [];
       var deleted = {};
-      results.forEach(function(res) {
+      var paths = results.map(function(res) {
         res = res.ok; // TODO: what about missing
         if (res._deleted) {
           deleted[res._rev] = true;
@@ -287,10 +288,9 @@ var visualizeRevTree = function(db, docId, callback) {
           }
           i--;
         });
-        var path = revs.ids.map(function(id, i) {
+        return revs.ids.map(function(id, i) {
           return (revs.start-i) + '-' + id;
         });
-        paths.push(path);
       });
       var minUniq = minUniqueLength(allRevs.map(function(rev) {
         return rev.split('-')[1];
