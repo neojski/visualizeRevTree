@@ -1,4 +1,4 @@
-var CORS_PROXY = 'http://cors.io/';
+var CORS_PROXY = 'http://nodejs-neojski.rhcloud.com/';
 
 var exportWrapper = document.getElementById('export');
 var placeholder = document.getElementById('svgPlaceholder');
@@ -6,14 +6,19 @@ var info = document.getElementById('info');
 var submit = document.getElementById('submit');
 
 var error = function(err) {
-  info.innerHTML = "Can't visualize document due to error (error: " +
-    err.error + "; reason: " + err.reason + ")";
+  console.log(err);
+  var str = '';
+  if (err.error) {
+    str = 'error: ' + err.error + ', reason: ' + reason;
+  } else {
+    str = err.toString();
+  }
+  info.innerHTML = "We encountered an error: " + str;
   submit.removeAttribute('disabled');
   exportWrapper.style.display = 'none';
 };
 
 function parseUrl(str) {
-
   var url = document.createElement('a');
   url.href = str;
   var path = url.pathname.split('/');
@@ -29,17 +34,22 @@ function parseUrl(str) {
   return url;
 }
 
-function initDB(dbUrl, callback) {
-
-  new Pouch(dbUrl, function(err, db) {
-
-    // Likely a CORS problem
-    if (err && err.status === 0) {
-      dbUrl = CORS_PROXY + dbUrl.replace(/^https?:\/\//, '');
-      return new Pouch(dbUrl, callback);
+function initDB(dbUrl) {
+  return new PouchDB(dbUrl).catch(function (err) {
+    if (dbUrl.toLowerCase().indexOf('localhost') > -1 || dbUrl.indexOf('127.0.0.1') > -1) {
+      alert('Cannot reach your localhost from the web. Try something online.');
+      throw 'Localhost not possible';
     }
 
-    callback(err, db);
+    error('Re-trying with cors proxy.')
+
+    // Likely a CORS problem
+    if (err && err.status === 405) {
+      dbUrl = CORS_PROXY + dbUrl.replace(/https?:\/\//, '');
+      return new PouchDB(dbUrl).catch(function (err) {
+        error('Could not connect to db: ' + dbUrl);
+      });
+    }
   });
 }
 
@@ -52,18 +62,8 @@ function doVisualisation(urlStr) {
 
   var url = parseUrl(urlStr);
 
-  initDB(url.dbUrl, function(err, db) {
-
-    if (err) {
-      return error(err);
-    }
-
-    visualizeRevTree(db, url.doc, function(err, box) {
-
-      if (err) {
-        return error(err);
-      }
-
+  initDB(url.dbUrl).then(function(db) {
+    return visualizeRevTree(db, url.doc).then(function(box) {
       var svg = box.getElementsByTagName('svg')[0];
       svg.style.width = svg.getAttribute('viewBox').split(' ')[2] * 7 + 'px';
       svg.style.height = svg.getAttribute('viewBox').split(' ')[3] * 7 + 'px';
@@ -72,21 +72,14 @@ function doVisualisation(urlStr) {
       info.innerHTML = '';
       exportWrapper.style.display = 'block';
       submit.removeAttribute('disabled');
-
     });
-  });
+  }, error);
 }
 
 function exportDoc() {
-
   var url = parseUrl(document.getElementById('url').value);
 
-  initDB(url.dbUrl, function(err, db) {
-
-    if (err) {
-      return error(err);
-    }
-
+  initDB(url.dbUrl).then(function (db) {
     db.get(url.doc, {revs: true, open_revs: "all"}, function(err, results) {
       var docs = [];
       results.forEach(function(row){
@@ -97,7 +90,7 @@ function exportDoc() {
                   JSON.stringify(docs) +
                   "}, {new_edits:false}, function(err, res){})");
     });
-  });
+  }, error);
 }
 
 function parseArgs() {
