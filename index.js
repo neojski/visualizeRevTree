@@ -1,4 +1,7 @@
-var CORS_PROXY = 'http://nodejs-neojski.rhcloud.com/';
+var CORS_PROXY =  'http://nodejs-neojski.rhcloud.com/';
+
+var PouchDB = require('pouchdb');
+var visualizeRevTree = require('./lib/visualizeRevTree');
 
 var exportWrapper = document.getElementById('export');
 var placeholder = document.getElementById('svgPlaceholder');
@@ -9,7 +12,7 @@ var error = function(err) {
   console.log(err);
   var str = '';
   if (err.error) {
-    str = 'error: ' + err.error + ', reason: ' + reason;
+    str = 'error: ' + err.error + ', reason: ' + err.toString();
   } else {
     str = err.toString();
   }
@@ -34,21 +37,29 @@ function parseUrl(str) {
   return url;
 }
 
+function isLocalhost(str) {
+  var url = document.createElement('a');
+  url.href = str;
+  return url.host === 'localhost' || url.host === '127.0.0.1';
+}
+
 function initDB(dbUrl) {
   return new PouchDB(dbUrl).catch(function (err) {
-    if (dbUrl.toLowerCase().indexOf('localhost') > -1 || dbUrl.indexOf('127.0.0.1') > -1) {
+    console.log('first try error', err);
+
+    if (isLocalhost(dbUrl) && !isLocalhost(location.href)) {
       alert('Cannot reach your localhost from the web. Try something online.');
       throw 'Localhost not possible';
     }
 
-    error('Re-trying with cors proxy.')
-
     // Likely a CORS problem
-    if (err && err.status === 405) {
+    if (err && err.status === 500) {
+      error('Re-trying with cors proxy.')
+
       dbUrl = CORS_PROXY + dbUrl.replace(/https?:\/\//, '');
-      return new PouchDB(dbUrl).catch(function (err) {
-        error('Could not connect to db: ' + dbUrl);
-      });
+      return new PouchDB(dbUrl);
+    } else {
+      throw err;
     }
   });
 }
