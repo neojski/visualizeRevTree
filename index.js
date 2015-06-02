@@ -1,4 +1,4 @@
-var CORS_PROXY =  'http://nodejs-neojski.rhcloud.com/';
+var CORS_PROXY =  'http://crossorigin.me/';
 
 var PouchDB = require('pouchdb');
 var visualizeRevTree = require('./lib/visualizeRevTree');
