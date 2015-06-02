@@ -56,7 +56,7 @@ function initDB(dbUrl) {
     if (err && err.status === 500) {
       error('Re-trying with cors proxy.')
 
-      dbUrl = CORS_PROXY + dbUrl.replace(/https?:\/\//, '');
+      dbUrl = CORS_PROXY + dbUrl;
       return new PouchDB(dbUrl);
     } else {
       throw err;
@@ -89,10 +89,9 @@ function doVisualisation(urlStr) {
 
 function exportDoc() {
   var url = parseUrl(document.getElementById('url').value);
-
   initDB(url.dbUrl).then(function (db) {
-    db.get(url.doc, {revs: true, open_revs: "all"}, function(err, results) {
-      var docs = results.forEach(function(row){
+    return db.get(url.doc, {revs: true, open_revs: "all"}).then(function(results) {
+      var docs = results.map(function(row){
         return row.ok;
       });
       console.log("Exported docs: ", JSON.stringify(docs));
