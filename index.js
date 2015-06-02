@@ -1,4 +1,4 @@
-var CORS_PROXY =  'http://crossorigin.me/';
+var CORS_PROXY =  'http://nodejs-neojski.rhcloud.com/';
 
 var PouchDB = require('pouchdb');
 var visualizeRevTree = require('./lib/visualizeRevTree');
@@ -56,7 +56,7 @@ function initDB(dbUrl) {
     if (err && err.status === 500) {
       error('Re-trying with cors proxy.')
 
-      dbUrl = CORS_PROXY + dbUrl;
+      dbUrl = CORS_PROXY + dbUrl.replace(/https?:\/\//, '');
       return new PouchDB(dbUrl);
     } else {
       throw err;
