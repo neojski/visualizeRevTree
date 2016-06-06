@@ -10,3 +10,11 @@ Just keep in mind that you can't put there `localhost:5984`.
 
 If you want to visualize you local revision trees then get a copy of this repo
 and run the `index.html` locally. Don't forget same origin policy.
+
+## Usage
+
+To use it in production, you need to install PouchDB, too:
+
+```
+npm i --save pouchdb
+```
