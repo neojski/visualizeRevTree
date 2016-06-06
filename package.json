@@ -2,8 +2,8 @@
   "name": "visualizeRevTree",
   "version": "0.0.1",
   "repository": "https://github.com/neojski/visualizeRevTree",
-  "dependencies": {
-    "pouchdb": "^3.4.0"
+  "devDependencies": {
+    "pouchdb": "^5.0.0"
   },
   "scripts": {
     "build": "browserify --debug index.js > dist/index.js",
